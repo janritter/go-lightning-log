@@ -9,7 +9,7 @@ jobs:
       language: go
       go: 'stable'
       script:
-        - make test
+        - make tests
     
     - stage: release
       language: node_js

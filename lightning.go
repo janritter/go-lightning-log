@@ -43,11 +43,11 @@ func (lightning *Lightning) Log(err error, tags map[string]string, severity int)
 		return errors.New("no logging, since minSeverity in the logger is lower than given severity")
 	}
 
-	go logConsole(err, tags, severity)
+	go logToConsole(err, tags, severity)
 	return nil
 }
 
-func logConsole(err error, tags map[string]string, severity int) {
+func logToConsole(err error, tags map[string]string, severity int) {
 	if tags != nil {
 		log.Println(fmt.Sprintf("%s - %s -- %s", severityLevels[severity], tags, err))
 		return

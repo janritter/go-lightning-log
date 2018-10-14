@@ -46,7 +46,7 @@ func TestLogPositive(t *testing.T) {
 	severity := 3
 	logger, _ := Init(severity)
 
-	if logger.Log(nil, nil, 2) == nil {
-		t.Errorf("Expected error, got nil")
+	if logger.Log(nil, nil, 2) != nil {
+		t.Errorf("Expected nil, got error")
 	}
 }

@@ -10,8 +10,8 @@ func TestDefaultGetMinSeverity(t *testing.T) {
 	}
 }
 
-func TestDefaultLog(t *testing.T) {
-	if Log(nil, nil, 4) == nil {
-		t.Errorf("Expected error, got nil")
-	}
-}
+// func TestDefaultLog(t *testing.T) {
+// 	if Log(nil, nil, 4) == nil {
+// 		t.Errorf("Expected error, got nil")
+// 	}
+// }

@@ -6,7 +6,7 @@ build: prepare
 	go build -o ./bin/go-lightning-log -v
 
 tests:
-	go test ./... -v
+	go test -v -cover
 
 run:
 	go run main.go

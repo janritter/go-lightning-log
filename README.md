@@ -2,7 +2,7 @@
  [![Build Status](https://travis-ci.org/janritter/go-lightning-log.svg?branch=master)](https://travis-ci.org/janritter/go-lightning-log)
  [![](https://godoc.org/github.com/janritter/go-lightning-log?status.svg)](http://godoc.org/github.com/janritter/go-lightning-log)
  [![Maintainability](https://api.codeclimate.com/v1/badges/b7ce8b1347d20e16ce35/maintainability)](https://codeclimate.com/github/janritter/go-lightning-log/maintainability)
- [![Coverage Status](https://coveralls.io/repos/github/janritter/go-lightning-log/badge.svg?branch=master)](https://coveralls.io/github/janritter/go-lightning-log?branch=master)
+ [![Test Coverage](https://api.codeclimate.com/v1/badges/b7ce8b1347d20e16ce35/test_coverage)](https://codeclimate.com/github/janritter/go-lightning-log/test_coverage)
 
 ## Usage
 

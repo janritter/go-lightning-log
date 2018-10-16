@@ -1,6 +1,9 @@
 package lightning
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func TestDefaultGetMinSeverity(t *testing.T) {
 	severity := 4
@@ -10,8 +13,14 @@ func TestDefaultGetMinSeverity(t *testing.T) {
 	}
 }
 
-// func TestDefaultLog(t *testing.T) {
-// 	if Log(nil, nil, 4) == nil {
-// 		t.Errorf("Expected error, got nil")
-// 	}
-// }
+func TestDefaultLogNegativeMissingError(t *testing.T) {
+	if Log(nil, nil, 4) == nil {
+		t.Errorf("Expected error, got nil")
+	}
+}
+
+func TestDefaultLogPositive(t *testing.T) {
+	if Log(errors.New("test error"), nil, 4) != nil {
+		t.Errorf("Expected nil, got error")
+	}
+}

@@ -8,8 +8,11 @@ jobs:
     - stage: test
       language: go
       go: 'stable'
+      before_install:
+        - go get github.com/mattn/goveralls
       script:
         - make tests
+        - $GOPATH/bin/goveralls -service=travis-ci
     
     - stage: release
       language: node_js

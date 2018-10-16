@@ -1,6 +1,13 @@
 package lightning
 
-import "testing"
+import (
+	"bytes"
+	"errors"
+	"log"
+	"os"
+	"strings"
+	"testing"
+)
 
 func TestInit(t *testing.T) {
 
@@ -33,7 +40,7 @@ func TestGetMinSeverity(t *testing.T) {
 	}
 }
 
-func TestLogNegative(t *testing.T) {
+func TestLogNegativeSeverityToHigh(t *testing.T) {
 	severity := 3
 	logger, _ := Init(severity)
 
@@ -46,7 +53,38 @@ func TestLogPositive(t *testing.T) {
 	severity := 3
 	logger, _ := Init(severity)
 
-	if logger.Log(nil, nil, 2) != nil {
+	if logger.Log(errors.New("test error"), nil, 2) != nil {
 		t.Errorf("Expected nil, got error")
+	}
+}
+
+func TestLogNegativeMissingError(t *testing.T) {
+	severity := 3
+	logger, _ := Init(severity)
+
+	if logger.Log(nil, nil, 3) == nil {
+		t.Errorf("Expected error, got nil")
+	}
+}
+
+func TestLogToConsole(t *testing.T) {
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer func() {
+		log.SetOutput(os.Stderr)
+	}()
+
+	logToConsole(errors.New("test error"), map[string]string{"module": "controller/bookings"}, 2)
+
+	if strings.Contains(buf.String(), "WARNING - map[module:controller/bookings] -- test error") == false {
+		t.Log(buf.String())
+		t.Errorf("Expected 'WARNING - map[module:controller/bookings] -- test error', got " + buf.String())
+	}
+
+	logToConsole(errors.New("test error"), nil, 2)
+
+	if strings.Contains(buf.String(), "WARNING - test error") == false {
+		t.Log(buf.String())
+		t.Errorf("Expected 'WARNING - test error', got " + buf.String())
 	}
 }

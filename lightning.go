@@ -41,6 +41,8 @@ func Init(minSeverity int) (*Lightning, error) {
 func (lightning *Lightning) Log(err error, tags map[string]string, severity int) error {
 	if lightning.minSeverity < severity {
 		return errors.New("no logging, since minSeverity in the logger is lower than given severity")
+	} else if err == nil {
+		return errors.New("no logging, error was nil")
 	}
 
 	go logToConsole(err, tags, severity)

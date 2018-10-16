@@ -2,6 +2,7 @@
  [![Build Status](https://travis-ci.org/janritter/go-lightning-log.svg?branch=master)](https://travis-ci.org/janritter/go-lightning-log)
  [![](https://godoc.org/github.com/janritter/go-lightning-log?status.svg)](http://godoc.org/github.com/janritter/go-lightning-log)
  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ea78dc8ca33c4269bbe8767e9b0a1fe4)](https://www.codacy.com/app/jan-ritter/go-lightning-log?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=janritter/go-lightning-log&amp;utm_campaign=Badge_Grade)
+ [![Coverage Status](https://coveralls.io/repos/github/janritter/go-lightning-log/badge.svg?branch=master)](https://coveralls.io/github/janritter/go-lightning-log?branch=master)
 
 ## Usage
 

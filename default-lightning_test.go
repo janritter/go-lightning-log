@@ -13,6 +13,12 @@ func TestDefaultGetMinSeverity(t *testing.T) {
 	}
 }
 
+func TestDefaultLogNegativeMissingError(t *testing.T) {
+	if Log(nil, nil, 4) == nil {
+		t.Errorf("Expected error, got nil")
+	}
+}
+
 func TestDefaultLogPositive(t *testing.T) {
 	if Log(errors.New("test error"), nil, 4) != nil {
 		t.Errorf("Expected nil, got error")

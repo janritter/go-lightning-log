@@ -58,6 +58,15 @@ func TestLogPositive(t *testing.T) {
 	}
 }
 
+func TestLogNegativeMissingError(t *testing.T) {
+	severity := 3
+	logger, _ := Init(severity)
+
+	if logger.Log(nil, nil, 3) == nil {
+		t.Errorf("Expected error, got nil")
+	}
+}
+
 func TestLogToConsole(t *testing.T) {
 	var buf bytes.Buffer
 	log.SetOutput(&buf)

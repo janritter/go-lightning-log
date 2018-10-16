@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/janritter/go-lightning-log/compare/1.0.0...1.1.0) (2018-10-16)
+
+
+### Bug Fixes
+
+* return Log error in default logger function call ([2838b73](https://github.com/janritter/go-lightning-log/commit/2838b73))
+
+
+### Features
+
+* added input validation to check if err parameter is set ([4c44db1](https://github.com/janritter/go-lightning-log/commit/4c44db1))
+
 # 1.0.0 (2018-10-06)
 
 

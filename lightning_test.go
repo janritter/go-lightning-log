@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestInit(t *testing.T) {
@@ -40,29 +41,29 @@ func TestGetMinSeverity(t *testing.T) {
 	}
 }
 
-func TestLogNegativeSeverityToHigh(t *testing.T) {
+func TestLogWithResultNegativeSeverityToHigh(t *testing.T) {
 	severity := 3
 	logger, _ := Init(severity)
 
-	if logger.Log(nil, nil, 4) == nil {
+	if logger.LogWithResult(nil, nil, 4) == nil {
 		t.Errorf("Expected error, got nil")
 	}
 }
 
-func TestLogPositive(t *testing.T) {
+func TestLogWithResultPositive(t *testing.T) {
 	severity := 3
 	logger, _ := Init(severity)
 
-	if logger.Log(errors.New("test error"), nil, 2) != nil {
+	if logger.LogWithResult(errors.New("test error"), nil, 2) != nil {
 		t.Errorf("Expected nil, got error")
 	}
 }
 
-func TestLogNegativeMissingError(t *testing.T) {
+func TestLogWithResultNegativeMissingError(t *testing.T) {
 	severity := 3
 	logger, _ := Init(severity)
 
-	if logger.Log(nil, nil, 3) == nil {
+	if logger.LogWithResult(nil, nil, 3) == nil {
 		t.Errorf("Expected error, got nil")
 	}
 }
@@ -70,9 +71,7 @@ func TestLogNegativeMissingError(t *testing.T) {
 func TestLogToConsole(t *testing.T) {
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
-	defer func() {
-		log.SetOutput(os.Stderr)
-	}()
+	defer log.SetOutput(os.Stderr)
 
 	logToConsole(errors.New("test error"), map[string]string{"module": "controller/bookings"}, 2)
 
@@ -86,5 +85,65 @@ func TestLogToConsole(t *testing.T) {
 	if strings.Contains(buf.String(), "WARNING - test error") == false {
 		t.Log(buf.String())
 		t.Errorf("Expected 'WARNING - test error', got " + buf.String())
+	}
+}
+
+func TestLogNegativeSeverityToHigh(t *testing.T) {
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer log.SetOutput(os.Stderr)
+
+	severity := 2
+	logger, _ := Init(severity)
+
+	logger.Log(errors.New("test error"), map[string]string{"module": "controller/bookings"}, 3)
+
+	// Wait for go routine to finish
+	time.Sleep(10000)
+
+	if strings.Contains(buf.String(), "") == false {
+		t.Log(buf.String())
+		t.Errorf("Expected '', got " + buf.String())
+		log.SetOutput(os.Stderr)
+	}
+}
+
+func TestLogPositive(t *testing.T) {
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer log.SetOutput(os.Stderr)
+
+	severity := 3
+	logger, _ := Init(severity)
+
+	logger.Log(errors.New("test error"), map[string]string{"module": "controller/bookings"}, 3)
+
+	// Wait for go routine to finish
+	time.Sleep(10000)
+
+	if strings.Contains(buf.String(), "INFO - map[module:controller/bookings] -- test error") == false {
+		t.Log(buf.String())
+		t.Errorf("Expected 'INFO - map[module:controller/bookings] -- test error', got " + buf.String())
+		log.SetOutput(os.Stderr)
+	}
+}
+
+func TestLogNegativeMissingError(t *testing.T) {
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer log.SetOutput(os.Stderr)
+
+	severity := 2
+	logger, _ := Init(severity)
+
+	logger.Log(nil, map[string]string{"module": "controller/bookings"}, 1)
+
+	// Wait for go routine to finish
+	time.Sleep(10000)
+
+	if strings.Contains(buf.String(), "") == false {
+		t.Log(buf.String())
+		t.Errorf("Expected '', got " + buf.String())
+		log.SetOutput(os.Stderr)
 	}
 }

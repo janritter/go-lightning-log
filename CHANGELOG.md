@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/janritter/go-lightning-log/compare/1.1.0...1.2.0) (2019-01-07)
+
+
+### Features
+
+* removed error response from Log function and added LogWithResult, which has the old Log command behaviour and returns an error for failed validation ([b8955e6](https://github.com/janritter/go-lightning-log/commit/b8955e6))
+
 # [1.1.0](https://github.com/janritter/go-lightning-log/compare/1.0.0...1.1.0) (2018-10-16)
 
 

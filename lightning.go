@@ -37,8 +37,9 @@ func Init(minSeverity int) (*Lightning, error) {
 	return lightning, nil
 }
 
-// Log is the central logging function, which uses an error, a map with tags and a severity level as inputs and decides based on the logger configurtion where to send / display the log
-func (lightning *Lightning) Log(err error, tags map[string]string, severity int) error {
+// LogWithResult is similar to the standard "Log" command with the main difference, that all validation errors are getting returned. This can be
+// usefull for debugging
+func (lightning *Lightning) LogWithResult(err error, tags map[string]string, severity int) error {
 	if lightning.minSeverity < severity {
 		return errors.New("no logging, since minSeverity in the logger is lower than given severity")
 	} else if err == nil {
@@ -47,6 +48,17 @@ func (lightning *Lightning) Log(err error, tags map[string]string, severity int)
 
 	go logToConsole(err, tags, severity)
 	return nil
+}
+
+// Log is the central logging function, which uses an error, a map with tags and a severity level as inputs and decides based on the logger
+// configurtion where to send / display the log entry
+// In comparison to the "LogWithResult" command, all validation errors (for example: empty error parameter) get handled internally and not returned
+// to the user
+func (lightning *Lightning) Log(err error, tags map[string]string, severity int) {
+	if lightning.minSeverity < severity || err == nil {
+		return
+	}
+	go logToConsole(err, tags, severity)
 }
 
 func logToConsole(err error, tags map[string]string, severity int) {

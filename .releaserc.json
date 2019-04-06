@@ -19,5 +19,5 @@
             "name": "janritter/go-lightning-log"
         }
     ],
-    "tagFormat": "${version}"
+    "tagFormat": "v${version}"
 }
